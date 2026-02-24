@@ -28,23 +28,23 @@
             border-color: #7dd3fc !important;
         }
         
-        /* High-Intensity Gold Burst Animation */
+        /* SNAPPY GOLD BURST: Faster and resets to slate */
         .gold-flash {
-            animation: gold-burst-fade 2.2s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+            animation: gold-burst-snap 1.0s cubic-bezier(0.2, 0, 0.2, 1) forwards;
             z-index: 30;
         }
 
-        @keyframes gold-burst-fade {
+        @keyframes gold-burst-snap {
             0% { 
                 background-color: #fcd34d; 
                 color: #451a03; 
                 border-color: #ffffff;
-                box-shadow: 0 0 50px #fbbf24, inset 0 0 20px #ffffff;
+                box-shadow: 0 0 40px #fbbf24;
                 transform: scale(1.1);
             }
-            15% {
+            10% {
                 background-color: #fbbf24;
-                box-shadow: 0 0 60px #fbbf24, inset 0 0 10px #ffffff;
+                box-shadow: 0 0 50px #fbbf24;
                 transform: scale(1.08);
             }
             100% { 
@@ -73,7 +73,6 @@
             transition: transform 0.1s ease;
         }
 
-        /* Splash Screen Mini Grids & Arrows */
         .mini-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -91,7 +90,6 @@
         .mini-cell.active { background: #38bdf8; }
         .mini-cell.gold { background: #fbbf24; }
 
-        /* Sleek White Arrows */
         .arrow-x {
             position: absolute;
             height: 1px;
@@ -135,105 +133,111 @@
 <body class="flex flex-col items-center min-h-screen p-4 overflow-x-hidden">
 
     <!-- Splash Screen -->
-    <div id="splash-screen" class="fixed inset-0 bg-slate-950 z-[100] flex flex-col items-center justify-center p-6 text-center overflow-y-auto">
-        <!-- Game Icon -->
-        <div class="mini-grid w-20 h-20 gap-1.5 p-1.5 mb-4 border-2 border-sky-900/30 aspect-square">
-            <div class="mini-cell"></div><div class="mini-cell active"></div><div class="mini-cell"></div><div class="mini-cell"></div>
-            <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
-            <div class="mini-cell"></div><div class="mini-cell active"></div><div class="mini-cell"></div><div class="mini-cell"></div>
-            <div class="mini-cell"></div><div class="mini-cell active"></div><div class="mini-cell"></div><div class="mini-cell"></div>
-        </div>
-        
-        <h1 class="text-6xl font-800 tracking-tighter text-sky-400 lowercase mb-1">girdle</h1>
-        <p class="text-slate-500 text-xs mb-8 uppercase tracking-[0.4em] font-bold leading-relaxed">place swipe score!</p>
-
-        <div class="w-full max-w-sm space-y-3 mb-8">
-            <!-- Basic Word Scoring -->
-            <div class="bg-slate-900/50 p-5 rounded-[2rem] border border-slate-800">
-                <h4 class="text-slate-400 text-[9px] font-800 uppercase tracking-[0.2em] mb-4">Word Scoring</h4>
-                <div class="grid grid-cols-4 gap-1 text-center">
-                    <div class="flex flex-col">
-                        <span class="text-sm font-800 text-white leading-none">1pt</span>
-                        <span class="text-[8px] text-slate-500 font-extrabold uppercase mt-1.5">3 Letters</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-sm font-800 text-white leading-none">2pts</span>
-                        <span class="text-[8px] text-slate-500 font-extrabold uppercase mt-1.5">4 Letters</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-sm font-800 text-white leading-none">5pts</span>
-                        <span class="text-[8px] text-slate-500 font-extrabold uppercase mt-1.5">5 Letters</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-sm font-800 text-sky-400 leading-none">8pts</span>
-                        <span class="text-[8px] text-slate-500 font-extrabold uppercase mt-1.5">6+ Letters</span>
-                    </div>
-                </div>
+    <div id="splash-screen" class="fixed inset-0 bg-slate-950 z-[100] flex flex-col items-center p-6 text-center overflow-y-auto">
+        <div class="m-auto flex flex-col items-center w-full max-w-sm py-8">
+            <div class="mini-grid w-20 h-20 gap-1.5 p-1.5 mb-4 border-2 border-sky-900/30 aspect-square">
+                <div class="mini-cell"></div><div class="mini-cell active"></div><div class="mini-cell"></div><div class="mini-cell"></div>
+                <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
+                <div class="mini-cell"></div><div class="mini-cell active"></div><div class="mini-cell"></div><div class="mini-cell"></div>
+                <div class="mini-cell"></div><div class="mini-cell active"></div><div class="mini-cell"></div><div class="mini-cell"></div>
             </div>
+            
+            <h1 class="text-6xl font-800 tracking-tighter text-sky-400 lowercase mb-1 text-center">girdle</h1>
+            <p class="text-slate-500 text-xs mb-8 uppercase tracking-[0.4em] font-bold leading-relaxed text-center">place swipe score!</p>
 
-            <!-- Bonus Grids -->
-            <div class="grid grid-cols-1 gap-3">
-                <div class="flex items-center gap-4 bg-slate-900/50 p-3 rounded-2xl border border-slate-800">
-                    <div class="mini-grid w-14 h-14">
-                        <div class="arrow-x" style="top:15%"></div>
-                        <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
-                        <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
-                        <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
-                        <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
-                    </div>
-                    <div class="text-left">
-                        <h4 class="text-amber-400 text-xs font-800 uppercase tracking-tight">Line Bonus (+5)</h4>
-                        <p class="text-[10px] text-slate-500 font-semibold leading-tight mt-0.5">Any straight 4-letter word.</p>
+            <div class="w-full max-w-sm space-y-3 mb-8">
+                <!-- Word Scoring Grid -->
+                <div class="bg-slate-900/50 p-5 rounded-[2rem] border border-slate-800 shadow-xl">
+                    <h4 class="text-slate-400 text-[10px] font-800 uppercase tracking-[0.2em] mb-4 text-center">Word Scoring</h4>
+                    <div class="grid grid-cols-4 gap-1 text-center">
+                        <div class="flex flex-col">
+                            <span class="text-sm font-800 text-white leading-none">1 Point</span>
+                            <span class="text-[11px] text-slate-400 font-extrabold uppercase mt-2">3 Letters</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-sm font-800 text-white leading-none">2 Points</span>
+                            <span class="text-[11px] text-slate-400 font-extrabold uppercase mt-2">4 Letters</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-sm font-800 text-white leading-none">3 Points</span>
+                            <span class="text-[11px] text-slate-400 font-extrabold uppercase mt-2">5 Letters</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-sm font-800 text-sky-400 leading-none">5 Points</span>
+                            <span class="text-[11px] text-slate-400 font-extrabold uppercase mt-2">6+ Letters</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-4 bg-slate-900/50 p-3 rounded-2xl border border-slate-800">
-                    <div class="mini-grid w-14 h-14">
-                        <div class="arrow-y" style="left:15%"></div>
-                        <div class="arrow-y" style="left:38.5%"></div>
-                        <div class="arrow-y" style="left:61.5%"></div>
-                        <div class="arrow-y" style="left:85%"></div>
-                        <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
-                        <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
-                        <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
-                        <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
+                <!-- Bonus Grids -->
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="flex items-center gap-4 bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+                        <div class="mini-grid w-14 h-14">
+                            <div class="arrow-x" style="top:15%"></div>
+                            <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
+                            <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
+                            <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
+                            <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
+                        </div>
+                        <div class="text-left">
+                            <h4 class="text-amber-400 text-xs font-800 uppercase tracking-tight">Line Bonus (+5)</h4>
+                            <p class="text-sm text-slate-400 font-semibold leading-tight mt-1">Any straight 4-letter word.</p>
+                        </div>
                     </div>
-                    <div class="text-left">
-                        <h4 class="text-amber-400 text-xs font-800 uppercase tracking-tight">Grid Bonus (+20)</h4>
-                        <p class="text-[10px] text-slate-500 font-semibold leading-tight mt-0.5">Complete all 4 Rows or Columns.</p>
+
+                    <div class="flex items-center gap-4 bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+                        <div class="mini-grid w-14 h-14">
+                            <div class="arrow-y" style="left:15%"></div>
+                            <div class="arrow-y" style="left:38.5%"></div>
+                            <div class="arrow-y" style="left:61.5%"></div>
+                            <div class="arrow-y" style="left:85%"></div>
+                            <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
+                            <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
+                            <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
+                            <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
+                        </div>
+                        <div class="text-left">
+                            <h4 class="text-amber-400 text-xs font-800 uppercase tracking-tight">Grid Bonus (+20)</h4>
+                            <p class="text-sm text-slate-400 font-semibold leading-tight mt-1">Complete all 4 Rows or Columns.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+                        <div class="mini-grid w-14 h-14">
+                            <div class="arrow-x" style="top:15%"></div>
+                            <div class="arrow-x" style="top:38.5%"></div>
+                            <div class="arrow-x" style="top:61.5%"></div>
+                            <div class="arrow-x" style="top:85%"></div>
+                            <div class="arrow-y" style="left:15%"></div>
+                            <div class="arrow-y" style="left:38.5%"></div>
+                            <div class="arrow-y" style="left:61.5%"></div>
+                            <div class="arrow-y" style="left:85%"></div>
+                            <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
+                            <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
+                            <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
+                            <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
+                        </div>
+                        <div class="text-left">
+                            <h4 class="text-sky-400 text-xs font-800 uppercase tracking-tight">Holy Grail (+100)</h4>
+                            <p class="text-sm text-slate-400 font-semibold leading-tight mt-1">Every row AND column is a word.</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-4 bg-slate-900/50 p-3 rounded-2xl border border-slate-800">
-                    <div class="mini-grid w-14 h-14">
-                        <div class="arrow-x" style="top:15%"></div>
-                        <div class="arrow-x" style="top:38.5%"></div>
-                        <div class="arrow-x" style="top:61.5%"></div>
-                        <div class="arrow-x" style="top:85%"></div>
-                        <div class="arrow-y" style="left:15%"></div>
-                        <div class="arrow-y" style="left:38.5%"></div>
-                        <div class="arrow-y" style="left:61.5%"></div>
-                        <div class="arrow-y" style="left:85%"></div>
-                        <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
-                        <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
-                        <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
-                        <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
-                    </div>
-                    <div class="text-left">
-                        <h4 class="text-sky-400 text-xs font-800 uppercase tracking-tight">Holy Grail (+100)</h4>
-                        <p class="text-[10px] text-slate-500 font-semibold leading-tight mt-0.5">Every row AND column is a word.</p>
-                    </div>
+                <div class="w-full max-w-xs space-y-3 pt-6 mx-auto">
+                    <button id="start-daily-btn" class="w-full py-5 bg-sky-500 hover:bg-sky-400 rounded-[2rem] font-800 text-slate-950 text-xl uppercase tracking-tighter shadow-2xl shadow-sky-500/20 active:scale-95 transition-all">
+                        Daily Challenge
+                    </button>
+                    <button id="start-practice-btn" class="w-full py-4 bg-transparent border-2 border-slate-800 hover:border-slate-600 rounded-[2rem] font-800 text-slate-400 text-sm uppercase tracking-widest active:scale-95 transition-all text-center">
+                        Practice Mode
+                    </button>
                 </div>
+                <p id="daily-info" class="text-[11px] text-slate-500 uppercase font-bold tracking-widest mt-4 text-center"></p>
             </div>
         </div>
-
-        <button id="start-btn" class="w-full max-w-xs py-5 bg-sky-500 hover:bg-sky-400 rounded-[2rem] font-800 text-slate-950 text-xl uppercase tracking-tighter shadow-2xl shadow-sky-500/20 active:scale-95 transition-all mb-4">
-            Play Game
-        </button>
-        <p id="daily-info" class="text-[9px] text-slate-600 uppercase font-bold tracking-widest mt-2"></p>
     </div>
 
-    <!-- Header -->
+    <!-- Game Header -->
     <header class="w-full max-w-md flex justify-between items-end mb-6 px-1">
         <div class="flex items-end gap-3">
             <div class="mini-grid w-11 h-11 gap-0.5 p-1 bg-slate-800 aspect-square">
@@ -243,7 +247,7 @@
                 <div class="mini-cell"></div><div class="mini-cell active"></div><div class="mini-cell"></div><div class="mini-cell"></div>
             </div>
             <div>
-                <h1 class="text-5xl font-800 tracking-tighter text-sky-400 leading-none lowercase">girdle</h1>
+                <h1 class="text-5xl font-800 tracking-tighter text-sky-400 leading-none lowercase">girdle <span id="practice-tag" class="hidden text-[10px] bg-rose-500 text-white px-2 py-0.5 rounded-full align-middle ml-1 uppercase tracking-widest">Practice</span></h1>
                 <p class="text-[10px] uppercase tracking-[0.2em] text-sky-800 font-extrabold mt-1">place swipe score!</p>
             </div>
         </div>
@@ -253,52 +257,27 @@
         </div>
     </header>
 
-    <!-- Main Game Container -->
     <main id="game-container" class="w-full max-w-md flex flex-col gap-4 opacity-0 transition-opacity duration-500">
-        
-        <div id="status-msg" class="bg-slate-800/40 p-3 rounded-2xl text-center text-xs font-semibold border border-slate-700/30 text-slate-300">
-            Tap a cell to place the letter.
-        </div>
-
-        <!-- Next Letter -->
+        <div id="status-msg" class="bg-slate-800/40 p-3 rounded-2xl text-center text-xs font-semibold border border-slate-700/30 text-slate-300">Tap a cell to place the letter.</div>
         <div id="next-letter-container" class="flex items-center justify-center gap-6 py-2">
-            <div class="text-right">
-                <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Up Next</p>
-                <p id="remaining-count" class="text-xs font-bold text-sky-500">16 left</p>
-            </div>
-            <div id="next-letter" class="w-20 h-20 bg-sky-500 rounded-3xl flex items-center justify-center text-4xl font-800 shadow-xl shadow-sky-900/30 border-b-4 border-sky-700 text-slate-900 transition-all">
-                -
-            </div>
+            <div class="text-right"><p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Up Next</p><p id="remaining-count" class="text-xs font-bold text-sky-500">16 left</p></div>
+            <div id="next-letter" class="w-20 h-20 bg-sky-500 rounded-3xl flex items-center justify-center text-4xl font-800 shadow-xl shadow-sky-900/30 border-b-4 border-sky-700 text-slate-900 transition-all">-</div>
         </div>
-
-        <!-- The 4x4 Grid -->
-        <div id="game-grid" class="grid grid-cols-4 gap-3 bg-slate-900 p-4 rounded-[2.5rem] shadow-2xl relative border border-slate-800/50">
-            <!-- JS populated -->
-        </div>
-
+        <div id="game-grid" class="grid grid-cols-4 gap-3 bg-slate-900 p-4 rounded-[2.5rem] shadow-2xl relative border border-slate-800/50"></div>
         <div id="controls" class="flex flex-col gap-3 mt-8">
-            <button id="main-action-btn" class="w-full py-4 bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-800 disabled:text-slate-600 rounded-2xl font-800 text-lg transition-all shadow-lg active:scale-95 text-slate-950 uppercase tracking-tight">
-                READY...
-            </button>
+            <button id="main-action-btn" class="w-full py-4 bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-800 disabled:text-slate-600 rounded-2xl font-800 text-lg transition-all shadow-lg active:scale-95 text-slate-950 uppercase tracking-tight">READY...</button>
             <p id="sub-msg" class="text-center text-[11px] text-slate-500 px-8 leading-relaxed"></p>
         </div>
-
-        <!-- Found Words -->
         <div id="word-discovery" class="hidden flex flex-col gap-2">
-            <div class="flex justify-between items-center px-1">
-                <h3 class="text-slate-500 text-[10px] font-extrabold uppercase tracking-widest">Found Words</h3>
-                <span id="word-count-badge" class="text-sky-500 text-[10px] font-bold bg-sky-500/10 px-2 py-0.5 rounded-full">0</span>
-            </div>
-            <div id="word-columns" class="grid grid-cols-4 gap-1.5 max-h-44 overflow-y-auto pr-1 custom-scrollbar">
-                <!-- Words go here -->
-            </div>
+            <div class="flex justify-between items-center px-1"><h3 class="text-slate-500 text-[10px] font-extrabold uppercase tracking-widest">Found Words</h3><span id="word-count-badge" class="text-sky-500 text-[10px] font-bold bg-sky-500/10 px-2 py-0.5 rounded-full">0</span></div>
+            <div id="word-columns" class="grid grid-cols-4 gap-1.5 max-h-44 overflow-y-auto pr-1 custom-scrollbar"></div>
         </div>
     </main>
 
     <!-- Result Modal -->
     <div id="result-modal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-xl hidden items-center justify-center p-6 z-50">
-        <div class="bg-slate-900 w-full max-w-sm rounded-[3rem] p-10 border border-slate-800 shadow-2xl flex flex-col items-center gap-6 text-center">
-            <div>
+        <div class="bg-slate-900 w-full max-w-sm rounded-[3rem] p-10 border border-slate-800 shadow-2xl flex flex-col items-center gap-6 text-center overflow-y-auto">
+            <div class="w-full flex flex-col items-center">
                 <h2 class="text-5xl font-800 text-sky-400 tracking-tighter lowercase">girdle</h2>
                 <p id="result-game-num" class="text-[10px] text-slate-500 uppercase font-bold tracking-[0.4em]">Game #0</p>
             </div>
@@ -309,39 +288,22 @@
             </div>
 
             <div class="w-full space-y-3 border-y border-slate-800 py-6">
-                <div class="flex justify-between text-xs font-bold">
-                    <span class="text-slate-500 uppercase">Words Found</span>
-                    <span id="stat-word-count" class="text-white">0</span>
-                </div>
-                <div class="flex justify-between text-xs font-bold">
-                    <span class="text-slate-500 uppercase">Word Pts</span>
-                    <span id="stat-word-pts" class="text-emerald-400">0</span>
-                </div>
-                <div class="flex justify-between text-xs font-bold">
-                    <span class="text-slate-500 uppercase">Switches</span>
-                    <span id="stat-deduction" class="text-rose-400">0</span>
-                </div>
-                <div class="flex justify-between text-xs font-bold hidden" id="row-bonus-row">
-                    <span class="text-amber-400 uppercase">Grid Bonus</span>
-                    <span id="stat-bonus" class="text-amber-400">0</span>
-                </div>
+                <div class="flex justify-between text-xs font-bold"><span class="text-slate-500 uppercase">Words Found</span><span id="stat-word-count" class="text-white">0</span></div>
+                <div class="flex justify-between text-xs font-bold"><span class="text-slate-500 uppercase">Word Pts</span><span id="stat-word-pts" class="text-white">0</span></div>
+                <div class="flex justify-between text-xs font-bold"><span class="text-amber-400 uppercase">Line Bonuses</span><span id="stat-line-bonus" class="text-amber-400">0</span></div>
+                <div class="flex justify-between text-xs font-bold"><span class="text-slate-500 uppercase">Switches</span><span id="stat-deduction" class="text-rose-400">0</span></div>
+                <div class="flex justify-between text-xs font-bold hidden" id="row-bonus-row"><span class="text-sky-400 uppercase">Grid Bonus</span><span id="stat-bonus" class="text-sky-400">0</span></div>
             </div>
 
             <div class="w-full space-y-3 opacity-0 transition-opacity duration-500" id="result-actions">
-                <button id="share-btn" class="w-full py-5 bg-sky-500 hover:bg-sky-400 rounded-[1.5rem] font-800 text-slate-950 flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95 text-lg uppercase">
-                    Copy Results
-                </button>
-                <div id="countdown-timer" class="text-[10px] text-slate-600 font-extrabold uppercase tracking-widest py-2">
-                    Next girdle in 00:00:00
-                </div>
+                <button id="share-btn" class="w-full py-5 bg-sky-500 hover:bg-sky-400 rounded-[1.5rem] font-800 text-slate-950 flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95 text-lg uppercase">Copy Results</button>
+                <div id="countdown-timer" class="text-[10px] text-slate-600 font-extrabold uppercase tracking-widest py-2"></div>
+                <button id="play-practice-again-btn" class="text-slate-400 text-xs font-bold uppercase tracking-widest hover:text-white transition-colors underline underline-offset-4">Try Practice Grid</button>
             </div>
         </div>
     </div>
 
-    <!-- Toast -->
-    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-white text-slate-950 px-8 py-3 rounded-full font-800 shadow-2xl opacity-0 transition-all pointer-events-none z-50 text-sm">
-        Results copied!
-    </div>
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-white text-slate-950 px-8 py-3 rounded-full font-800 shadow-2xl opacity-0 transition-all pointer-events-none z-50 text-sm">Results copied!</div>
 
     <script>
         const PHASES = { START: -1, PLACE: 0, REARRANGE: 1, SWIPE: 2, RESULT: 3 };
@@ -351,20 +313,19 @@
         let placementIndex = 0;
         let switches = 0;
         let wordScore = 0;
+        let lineBonusScore = 0;
         let bonusScore = 0;
         let foundWords = [];
         let swapStartIdx = null;
         let lineBonusCells = new Set();
-        
+        let isPracticeMode = false;
         let isSwiping = false;
         let currentSwipePath = [];
         let swipeWord = "";
 
-        // GLOBAL SEEDED RANDOM GENERATOR (Mulberry32)
+        // Seeded Generator (Mulberry32)
         let randomState;
-        function seedRandom(s) {
-            randomState = s;
-        }
+        function seedRandom(s) { randomState = s; }
         function seededRandom() {
             randomState |= 0; randomState = randomState + 0x6D2B79F5 | 0;
             let t = Math.imul(randomState ^ randomState >>> 15, 1 | randomState);
@@ -372,7 +333,6 @@
             return ((t ^ t >>> 14) >>> 0) / 4294967296;
         }
 
-        // FISHER-YATES SHUFFLE (Seeded)
         function seededShuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(seededRandom() * (i + 1));
@@ -396,74 +356,52 @@
 
         function getDailySeed() {
             const now = new Date();
-            const year = now.getUTCFullYear();
-            const month = now.getUTCMonth();
-            const day = now.getUTCDate();
-            return year * 10000 + (month + 1) * 100 + day;
+            return now.getUTCFullYear() * 10000 + (now.getUTCMonth() + 1) * 100 + now.getUTCDate();
         }
 
         function getGameNumber() {
-            const epoch = new Date('2025-02-20').getTime(); // Start counting from a fixed point
-            const now = new Date().getTime();
-            return Math.floor((now - epoch) / (1000 * 60 * 60 * 24)) + 1;
+            const epoch = new Date('2025-02-20').getTime();
+            return Math.floor((new Date().getTime() - epoch) / (1000 * 60 * 60 * 24)) + 1;
         }
 
         function generateLetterSet() {
-            const vPool = "AEIOU".split("");
-            const vWeights = [9, 12, 9, 8, 4];
-            const cPool = "BCDFGHJKLMNPQRSTVWXYZ".split("");
-            const cWeights = [2, 2, 4, 2, 3, 2, 1, 4, 8, 2, 6, 6, 2, 1, 6, 4, 6, 2, 2, 1, 2, 1];
+            const vPool = "AEIOU".split(""), vWeights = [9, 12, 9, 8, 4];
+            const cPool = "BCDFGHJKLMNPQRSTVWXYZ".split(""), cWeights = [2, 2, 4, 2, 3, 2, 1, 4, 8, 2, 6, 6, 2, 1, 6, 4, 6, 2, 2, 1, 2, 1];
             const awkwardLetters = ['K', 'W', 'V', 'J', 'X', 'Z', 'Q'];
-
-            let result = [];
-            let letterCounts = {};
-            let awkwardTotal = 0;
+            let result = [], letterCounts = {}, awkwardTotal = 0;
 
             function getRandomFromPool(pool, weights, type) {
                 let activeIndices = [];
                 for (let i = 0; i < pool.length; i++) {
-                    const char = pool[i];
-                    const count = letterCounts[char] || 0;
-                    if (type === 'vowel') {
-                        if (count < 2) activeIndices.push(i);
-                    } else {
-                        if (awkwardLetters.includes(char)) {
-                            if (awkwardTotal < 1) activeIndices.push(i);
-                        } else {
-                            if (count < 3) activeIndices.push(i);
-                        }
-                    }
+                    const char = pool[i], count = letterCounts[char] || 0;
+                    // STRICT CAP: Max 2 of any consonant/vowel
+                    if (type === 'vowel' ? count < 2 : awkwardLetters.includes(char) ? awkwardTotal < 1 : count < 2) activeIndices.push(i);
                 }
                 if (activeIndices.length === 0) return pool[0];
-                const filteredPool = activeIndices.map(i => pool[i]);
                 const filteredWeights = activeIndices.map(i => weights[i]);
                 const totalWeight = filteredWeights.reduce((a, b) => a + b, 0);
-                
                 let random = seededRandom() * totalWeight;
-                for (let i = 0; i < filteredPool.length; i++) {
-                    if (random < filteredWeights[i]) return filteredPool[i];
+                for (let i = 0; i < activeIndices.length; i++) {
+                    if (random < filteredWeights[i]) return pool[activeIndices[i]];
                     random -= filteredWeights[i];
                 }
-                return filteredPool[0];
+                return pool[0];
             }
 
             const vowelTarget = seededRandom() > 0.5 ? 5 : 6;
             for (let i = 0; i < vowelTarget; i++) {
                 const v = getRandomFromPool(vPool, vWeights, 'vowel');
-                letterCounts[v] = (letterCounts[v] || 0) + 1;
-                result.push(v);
+                letterCounts[v] = (letterCounts[v] || 0) + 1; result.push(v);
             }
             for (let i = 0; i < (16 - vowelTarget); i++) {
                 const c = getRandomFromPool(cPool, cWeights, 'consonant');
                 if (awkwardLetters.includes(c)) awkwardTotal++;
-                letterCounts[c] = (letterCounts[c] || 0) + 1;
-                result.push(c);
+                letterCounts[c] = (letterCounts[c] || 0) + 1; result.push(c);
             }
 
             seededShuffle(result);
-
-            const qIndex = result.indexOf('Q');
-            if (qIndex !== -1) {
+            const qIdx = result.indexOf('Q');
+            if (qIdx !== -1) {
                 if (!result.includes('U')) {
                     const replaceIdx = result.findIndex(l => l !== 'Q' && "AEIO".includes(l));
                     if (replaceIdx !== -1) result[replaceIdx] = 'U';
@@ -476,35 +414,56 @@
             return result.slice(0, 16);
         }
 
-        function updateUI() {
-            const scoreDisp = document.getElementById('score-display');
-            const deductionDisp = document.getElementById('deduction-display');
-            const remCount = document.getElementById('remaining-count');
-            const status = document.getElementById('status-msg');
-            const btn = document.getElementById('main-action-btn');
-            const subMsg = document.getElementById('sub-msg');
+        function startNewGame(mode) {
+            isPracticeMode = mode === 'practice';
+            currentPhase = PHASES.PLACE;
+            grid = Array(16).fill(null);
+            placementIndex = 0;
+            switches = 0;
+            wordScore = 0;
+            lineBonusScore = 0;
+            bonusScore = 0;
+            foundWords = [];
+            lineBonusCells.clear();
+            
+            document.getElementById('practice-tag').classList.toggle('hidden', !isPracticeMode);
+            document.getElementById('word-columns').innerHTML = '';
+            document.getElementById('word-discovery').classList.add('hidden');
+            document.getElementById('next-letter-container').classList.remove('hidden');
+            document.getElementById('splash-screen').style.display = 'none';
+            document.getElementById('result-modal').classList.add('hidden');
+            document.getElementById('game-container').classList.remove('opacity-0');
+            
+            seedRandom(isPracticeMode ? Math.floor(Math.random() * 1000000) : getDailySeed());
+            lettersToPlace = generateLetterSet();
+            document.getElementById('next-letter').innerText = lettersToPlace[0];
+            createGrid();
+            renderGrid();
+            updateUI();
+        }
 
-            scoreDisp.innerText = Math.max(0, wordScore + bonusScore - switches);
-            deductionDisp.innerText = `Cost: ${switches}`;
-            remCount.innerText = `${16 - placementIndex} left`;
+        function updateUI() {
+            const btn = document.getElementById('main-action-btn');
+            const sub = document.getElementById('sub-msg');
+            document.getElementById('score-display').innerText = Math.max(0, wordScore + lineBonusScore + bonusScore - switches);
+            document.getElementById('deduction-display').innerText = `Cost: ${switches}`;
+            document.getElementById('remaining-count').innerText = `${16 - placementIndex} left`;
 
             if (currentPhase === PHASES.PLACE) {
-                status.innerText = "Tap a cell to place the next letter.";
+                document.getElementById('status-msg').innerText = "Tap a cell to place the letter.";
                 btn.disabled = placementIndex < 16;
                 btn.innerText = placementIndex < 16 ? "PLACING..." : "START REARRANGING";
-                subMsg.innerText = "Target a Perfect Grid: All Rows or All Columns = +20 PTS!";
+                sub.innerText = "Goal: Forced Rows or Columns = +20 PT Bonus.";
             } else if (currentPhase === PHASES.REARRANGE) {
-                status.innerText = "Swap letters for 1 point each.";
-                btn.disabled = false;
-                btn.innerText = "LOCK IN GRID";
+                document.getElementById('status-msg').innerText = "Swap letters for 1 point each.";
+                btn.disabled = false; btn.innerText = "LOCK IN GRID";
                 document.getElementById('next-letter-container').classList.add('hidden');
-                subMsg.innerText = "Horizontal or Vertical 4-letter words earn a +5 Gold Bonus.";
+                sub.innerText = "Every swap costs 1 point. Aim for line bonuses!";
             } else if (currentPhase === PHASES.SWIPE) {
-                status.innerText = "Find words! Swipe to connect.";
-                btn.disabled = false;
-                btn.innerText = "FINISH GAME";
+                document.getElementById('status-msg').innerText = "Find words! Swipe to connect.";
+                btn.disabled = false; btn.innerText = "FINISH GAME";
                 document.getElementById('word-discovery').classList.remove('hidden');
-                subMsg.innerText = "Points: 3L=1, 4L=2, 5L=5, 6L+=8. Diagonals allowed!";
+                sub.innerText = "Points: 3L=1, 4L=2, 5L=3, 6L+=5. Diagonals allowed!";
             }
         }
 
@@ -516,18 +475,15 @@
                 cell.className = 'grid-cell bg-slate-800 rounded-2xl flex items-center justify-center text-3xl font-800 cursor-pointer hover:bg-slate-700 select-none touch-none transition-all border-b-4 border-slate-950 shadow-inner text-slate-100';
                 cell.id = `cell-${i}`;
                 cell.dataset.index = i;
-                cell.addEventListener('mousedown', (e) => handleCellInteraction(i, 'start'));
-                cell.addEventListener('mouseenter', (e) => handleCellInteraction(i, 'move'));
+                cell.addEventListener('mousedown', () => handleCellInteraction(i, 'start'));
+                cell.addEventListener('mouseenter', () => handleCellInteraction(i, 'move'));
                 cell.addEventListener('touchstart', (e) => { e.preventDefault(); handleCellInteraction(i, 'start'); });
                 container.appendChild(cell);
             }
             window.addEventListener('mouseup', () => handleCellInteraction(null, 'end'));
             container.addEventListener('touchmove', (e) => {
-                const touch = e.touches[0];
-                const element = document.elementFromPoint(touch.clientX, touch.clientY);
-                if (element && element.classList.contains('grid-cell')) {
-                    handleCellInteraction(parseInt(element.dataset.index), 'move');
-                }
+                const element = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+                if (element?.classList.contains('grid-cell')) handleCellInteraction(parseInt(element.dataset.index), 'move');
             });
             window.addEventListener('touchend', () => handleCellInteraction(null, 'end'));
         }
@@ -536,14 +492,13 @@
             grid.forEach((letter, i) => {
                 const cell = document.getElementById(`cell-${i}`);
                 cell.innerText = letter || '';
+                // Don't overwrite cells while they are gold-flashing
                 if (!cell.classList.contains('gold-flash')) {
                     cell.classList.remove('bg-sky-500', 'bg-slate-800', 'bg-slate-700', 'border-sky-300', 'swiping-active', 'scale-90', 'border-b-sky-700', 'text-slate-900');
-                    if (currentPhase === PHASES.SWIPE) {
-                        if (currentSwipePath.includes(i)) cell.classList.add('swiping-active');
-                        else cell.classList.add('bg-slate-800');
-                    } else if (currentPhase === PHASES.REARRANGE) {
-                        if (swapStartIdx === i) cell.classList.add('border-sky-300', 'bg-sky-500', 'border-b-sky-700', 'scale-90', 'text-slate-900');
-                        else cell.classList.add('bg-slate-800');
+                    if (currentPhase === PHASES.SWIPE && currentSwipePath.includes(i)) {
+                        cell.classList.add('swiping-active');
+                    } else if (currentPhase === PHASES.REARRANGE && swapStartIdx === i) {
+                        cell.classList.add('border-sky-300', 'bg-sky-500', 'border-b-sky-700', 'scale-90', 'text-slate-900');
                     } else {
                         cell.classList.add(letter ? 'bg-slate-700' : 'bg-slate-800');
                     }
@@ -552,141 +507,83 @@
         }
 
         function handleCellInteraction(idx, type) {
-            if (currentPhase === PHASES.PLACE) {
-                if (type === 'start' && idx !== null && grid[idx] === null && placementIndex < 16) {
-                    grid[idx] = lettersToPlace[placementIndex];
-                    placementIndex++;
-                    if (placementIndex < 16) document.getElementById('next-letter').innerText = lettersToPlace[placementIndex];
-                    else document.getElementById('next-letter').innerText = '✓';
-                    renderGrid();
-                    updateUI();
+            if (currentPhase === PHASES.PLACE && type === 'start' && idx !== null && !grid[idx] && placementIndex < 16) {
+                grid[idx] = lettersToPlace[placementIndex++];
+                document.getElementById('next-letter').innerText = placementIndex < 16 ? lettersToPlace[placementIndex] : '✓';
+                renderGrid(); updateUI();
+            } else if (currentPhase === PHASES.REARRANGE && type === 'start' && idx !== null) {
+                if (swapStartIdx === null) swapStartIdx = idx;
+                else if (swapStartIdx === idx) swapStartIdx = null;
+                else {
+                    [grid[idx], grid[swapStartIdx]] = [grid[swapStartIdx], grid[idx]];
+                    switches++; swapStartIdx = null;
                 }
-            } else if (currentPhase === PHASES.REARRANGE) {
-                if (type === 'start' && idx !== null) {
-                    if (swapStartIdx === null) swapStartIdx = idx;
-                    else if (swapStartIdx === idx) swapStartIdx = null;
-                    else {
-                        const temp = grid[idx];
-                        grid[idx] = grid[swapStartIdx];
-                        grid[swapStartIdx] = temp;
-                        switches++;
-                        swapStartIdx = null;
-                    }
-                    renderGrid();
-                    updateUI();
-                }
+                renderGrid(); updateUI();
             } else if (currentPhase === PHASES.SWIPE) {
                 if (type === 'start' && idx !== null) {
-                    isSwiping = true;
-                    currentSwipePath = [idx];
-                    swipeWord = grid[idx];
-                    renderGrid();
-                } else if (type === 'move' && isSwiping && idx !== null) {
-                    if (!currentSwipePath.includes(idx) && isAdjacent(currentSwipePath[currentSwipePath.length - 1], idx)) {
-                        currentSwipePath.push(idx);
-                        swipeWord += grid[idx];
-                        renderGrid();
-                    }
+                    isSwiping = true; currentSwipePath = [idx]; swipeWord = grid[idx]; renderGrid();
+                } else if (type === 'move' && isSwiping && idx !== null && !currentSwipePath.includes(idx) && isAdjacent(currentSwipePath[currentSwipePath.length - 1], idx)) {
+                    currentSwipePath.push(idx); swipeWord += grid[idx]; renderGrid();
                 } else if (type === 'end' && isSwiping) {
-                    processSwipe();
-                    isSwiping = false;
-                    currentSwipePath = [];
-                    swipeWord = "";
-                    renderGrid();
+                    processSwipe(); isSwiping = false; currentSwipePath = []; swipeWord = ""; renderGrid();
                 }
             }
         }
 
         function isAdjacent(idx1, idx2) {
-            const r1 = Math.floor(idx1 / 4), c1 = idx1 % 4;
-            const r2 = Math.floor(idx2 / 4), c2 = idx2 % 4;
+            const r1 = Math.floor(idx1 / 4), c1 = idx1 % 4, r2 = Math.floor(idx2 / 4), c2 = idx2 % 4;
             return Math.abs(r1 - r2) <= 1 && Math.abs(c1 - c2) <= 1;
         }
 
         function processSwipe() {
-            if (swipeWord.length < 3) return;
-            if (foundWords.includes(swipeWord)) return;
-            if (DICTIONARY.has(swipeWord)) {
-                foundWords.push(swipeWord);
-                const len = swipeWord.length;
-                let pts = 1;
-                if (len === 4) pts = 2;
-                else if (len === 5) pts = 5;
-                else if (len >= 6) pts = 8;
-                
-                if (len === 4) {
-                    const p = [...currentSwipePath];
-                    const r0 = Math.floor(p[0]/4), c0 = p[0]%4;
-                    const isHorizontal = p.every(idx => Math.floor(idx/4) === r0);
-                    const isVertical = p.every(idx => idx%4 === c0);
-                    if (isHorizontal || isVertical) {
-                        pts += 5;
-                        p.forEach(idx => {
-                            lineBonusCells.add(idx);
-                            const cell = document.getElementById(`cell-${idx}`);
-                            cell.classList.remove('swiping-active', 'bg-sky-500', 'border-sky-300');
-                            cell.classList.add('gold-flash');
-                            setTimeout(() => {
-                                cell.classList.remove('gold-flash');
-                                renderGrid();
-                            }, 2300);
-                        });
-                    }
+            if (swipeWord.length < 3 || foundWords.includes(swipeWord) || !DICTIONARY.has(swipeWord)) return;
+            foundWords.push(swipeWord);
+            let pts = swipeWord.length === 3 ? 1 : swipeWord.length === 4 ? 2 : swipeWord.length === 5 ? 3 : 5;
+            
+            if (swipeWord.length === 4) {
+                const r0 = Math.floor(currentSwipePath[0]/4), c0 = currentSwipePath[0]%4;
+                if (currentSwipePath.every(i => Math.floor(i/4) === r0) || currentSwipePath.every(i => i%4 === c0)) {
+                    lineBonusScore += 5;
+                    const bonusPath = [...currentSwipePath];
+                    bonusPath.forEach(i => {
+                        lineBonusCells.add(i);
+                        const cell = document.getElementById(`cell-${i}`);
+                        cell.classList.add('gold-flash');
+                        setTimeout(() => {
+                            cell.classList.remove('gold-flash');
+                            renderGrid();
+                        }, 1000); // Sync with faster animation duration
+                    });
                 }
-                wordScore += pts;
-                addWordToUI(swipeWord, pts);
-                updateUI();
-                document.getElementById('word-count-badge').innerText = foundWords.length;
             }
-        }
-
-        function addWordToUI(word, pts) {
-            const col = document.getElementById('word-columns');
+            wordScore += pts;
             const div = document.createElement('div');
             div.className = 'word-item bg-slate-800/80 px-1.5 py-1 rounded border border-slate-700/50 flex justify-between items-center gap-1 font-bold text-sky-400 uppercase';
-            div.innerHTML = `<span class="truncate">${word}</span><span class="text-[8px] bg-sky-500/20 px-1 rounded-sm text-sky-300">${pts}</span>`;
-            col.prepend(div);
+            div.innerHTML = `<span class="truncate">${swipeWord}</span><span class="text-[8px] bg-sky-500/20 px-1 rounded-sm text-sky-300">${pts}</span>`;
+            document.getElementById('word-columns').prepend(div);
+            document.getElementById('word-count-badge').innerText = foundWords.length;
+            updateUI();
         }
 
         function handleMainAction() {
-            if (currentPhase === PHASES.START) {
-                document.getElementById('splash-screen').style.display = 'none';
-                document.getElementById('game-container').classList.remove('opacity-0');
-                currentPhase = PHASES.PLACE;
-            } else if (currentPhase === PHASES.PLACE) {
-                currentPhase = PHASES.REARRANGE;
-            } else if (currentPhase === PHASES.REARRANGE) {
-                currentPhase = PHASES.SWIPE;
-            } else if (currentPhase === PHASES.SWIPE) {
-                showResults();
-            }
-            renderGrid();
-            updateUI();
+            if (currentPhase === PHASES.PLACE) currentPhase = PHASES.REARRANGE;
+            else if (currentPhase === PHASES.REARRANGE) currentPhase = PHASES.SWIPE;
+            else if (currentPhase === PHASES.SWIPE) showResults();
+            renderGrid(); updateUI();
         }
 
         async function animateValue(id, start, end, duration) {
             const el = document.getElementById(id);
             el.classList.add('tally-animating');
-            const range = end - start;
-            let current = start;
-            const increment = end > start ? 1 : -1;
-            const stepTime = Math.abs(Math.floor(duration / (range || 1)));
+            const range = end - start, step = Math.abs(Math.floor(duration / (range || 1)));
             return new Promise(resolve => {
-                if (range === 0) {
-                    el.classList.remove('tally-animating');
-                    el.innerText = end;
-                    resolve();
-                    return;
-                }
+                let current = start;
                 const timer = setInterval(() => {
-                    current += increment;
+                    current += (end > start ? 1 : -1);
                     el.innerText = current;
-                    if (current == end) {
-                        clearInterval(timer);
-                        el.classList.remove('tally-animating');
-                        resolve();
-                    }
-                }, Math.max(stepTime, 20));
+                    if (current == end) { clearInterval(timer); el.classList.remove('tally-animating'); resolve(); }
+                }, Math.max(step, 20));
+                if (range === 0) { el.innerText = end; clearInterval(timer); resolve(); }
             });
         }
 
@@ -695,97 +592,65 @@
             document.getElementById('result-modal').classList.remove('hidden');
             document.getElementById('result-modal').classList.add('flex');
             
-            let rowsWords = 0;
-            let colsWords = 0;
+            let rowsW = 0, colsW = 0;
             for (let i = 0; i < 4; i++) {
-                const rowStr = grid.slice(i * 4, (i + 1) * 4).join("");
-                if (DICTIONARY.has(rowStr)) rowsWords++;
-                const colStr = [grid[i], grid[i+4], grid[i+8], grid[i+12]].join("");
-                if (DICTIONARY.has(colStr)) colsWords++;
+                if (DICTIONARY.has(grid.slice(i*4, i*4+4).join(""))) rowsW++;
+                if (DICTIONARY.has([grid[i], grid[i+4], grid[i+8], grid[i+12]].join(""))) colsW++;
             }
-            let gridBonus = 0;
-            if (rowsWords === 4 && colsWords === 4) gridBonus = 100;
-            else if (rowsWords === 4 || colsWords === 4) gridBonus = 20;
-            bonusScore = gridBonus;
-            const totalScore = Math.max(0, wordScore + bonusScore - switches);
+            bonusScore = (rowsW === 4 && colsW === 4) ? 100 : (rowsW === 4 || colsW === 4) ? 20 : 0;
             
-            document.getElementById('result-game-num').innerText = `Game #${getGameNumber()}`;
-            document.getElementById('stat-word-count').innerText = "0";
-            document.getElementById('stat-word-pts').innerText = "0";
-            document.getElementById('stat-deduction').innerText = "0";
-            document.getElementById('stat-bonus').innerText = "0";
-            document.getElementById('final-score').innerText = "0";
-            document.getElementById('row-bonus-row').classList.toggle('hidden', gridBonus === 0);
+            document.getElementById('result-game-num').innerText = isPracticeMode ? "Practice" : `Game #${getGameNumber()}`;
+            document.getElementById('row-bonus-row').classList.toggle('hidden', bonusScore === 0);
+            document.getElementById('countdown-timer').classList.toggle('hidden', isPracticeMode);
+            document.getElementById('share-btn').classList.toggle('hidden', isPracticeMode);
             
             await new Promise(r => setTimeout(r, 500));
             await animateValue('stat-word-count', 0, foundWords.length, 600);
-            await new Promise(r => setTimeout(r, 200));
             await animateValue('stat-word-pts', 0, wordScore, 800);
-            await new Promise(r => setTimeout(r, 200));
+            await animateValue('stat-line-bonus', 0, lineBonusScore, 800);
             await animateValue('stat-deduction', 0, switches, 500);
-            if (gridBonus > 0) {
-                await new Promise(r => setTimeout(r, 200));
-                await animateValue('stat-bonus', 0, gridBonus, 500);
-            }
-            await new Promise(r => setTimeout(r, 400));
+            if (bonusScore > 0) await animateValue('stat-bonus', 0, bonusScore, 500);
             document.getElementById('final-score-container').classList.remove('opacity-0');
-            await animateValue('final-score', 0, totalScore, 1000);
-            await new Promise(r => setTimeout(r, 500));
+            await animateValue('final-score', 0, Math.max(0, wordScore + lineBonusScore + bonusScore - switches), 1000);
             document.getElementById('result-actions').classList.remove('opacity-0');
-            startCountdown();
+            if (!isPracticeMode) startCountdown();
         }
 
         function startCountdown() {
-            const timerEl = document.getElementById('countdown-timer');
-            function updateTimer() {
-                const now = new Date();
-                const nextDay = new Date(now);
-                nextDay.setUTCDate(now.getUTCDate() + 1);
-                nextDay.setUTCHours(0, 0, 0, 0);
-                const diff = nextDay - now;
-                const h = Math.floor(diff / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((diff % (1000 * 60)) / 1000);
-                timerEl.innerText = `Next girdle in ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-            }
-            setInterval(updateTimer, 1000);
-            updateTimer();
+            const timer = document.getElementById('countdown-timer');
+            const update = () => {
+                const now = new Date(), next = new Date(now);
+                next.setUTCDate(now.getUTCDate() + 1); next.setUTCHours(0, 0, 0, 0);
+                const d = next - now, h = Math.floor(d/3600000), m = Math.floor((d%3600000)/60000), s = Math.floor((d%60000)/1000);
+                timer.innerText = `Next girdle in ${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            };
+            setInterval(update, 1000); update();
         }
 
         function copyResults() {
-            let gridVisual = "";
+            if (isPracticeMode) return;
+            let visual = "";
             for(let i=0; i<16; i++) {
-                const emoji = lineBonusCells.has(i) ? "🟨" : "⬛";
-                gridVisual += emoji;
-                if((i+1) % 4 === 0) gridVisual += "\n";
+                const letter = grid[i];
+                // Visual brackets for bonus words
+                visual += lineBonusCells.has(i) ? `[${letter}]` : ` ${letter} `;
+                if((i+1) % 4 === 0) visual += "\n";
             }
-            const wordsList = foundWords.length > 0 ? foundWords.join(", ") : "None";
-            const shareText = `girdle #${getGameNumber()} 🫧\nScore: ${Math.max(0, wordScore + bonusScore - switches)}\nWords Found: ${foundWords.length}\nSwitches: ${switches}\nGrid Bonus: +${bonusScore}\n\n${gridVisual}\n\n🔥 beat my score!`;
-            const el = document.createElement('textarea');
-            el.value = shareText;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            const toast = document.getElementById('toast');
-            toast.style.opacity = '1';
-            setTimeout(() => toast.style.opacity = '0', 2000);
+            const gameRef = `#${getGameNumber()}`;
+            const total = Math.max(0, wordScore + lineBonusScore + bonusScore - switches);
+            const text = `girdle ${gameRef} 🫧\nScore: ${total}\nWords: ${foundWords.length}\nLines: +${lineBonusScore}\nGrid: +${bonusScore}\nSwitches: -${switches}\n\n${visual}\n\n🔥 beat my score!`;
+            const el = document.createElement('textarea'); el.value = text;
+            document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+            document.getElementById('toast').style.opacity = '1';
+            setTimeout(() => document.getElementById('toast').style.opacity = '0', 2000);
         }
 
         window.onload = async () => {
             await loadDictionary();
-            
-            // Set up seeded random based on current day
-            const dailySeed = getDailySeed();
-            seedRandom(dailySeed);
-            
             document.getElementById('daily-info').innerText = `Daily Challenge #${getGameNumber()}`;
-            
-            lettersToPlace = generateLetterSet();
-            document.getElementById('next-letter').innerText = lettersToPlace[0];
-            createGrid();
-            updateUI();
-            document.getElementById('start-btn').addEventListener('click', handleMainAction);
+            document.getElementById('start-daily-btn').addEventListener('click', () => startNewGame('daily'));
+            document.getElementById('start-practice-btn').addEventListener('click', () => startNewGame('practice'));
+            document.getElementById('play-practice-again-btn').addEventListener('click', () => startNewGame('practice'));
             document.getElementById('main-action-btn').addEventListener('click', handleMainAction);
             document.getElementById('share-btn').addEventListener('click', copyResults);
         }
