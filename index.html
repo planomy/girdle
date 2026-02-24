@@ -73,29 +73,70 @@
             transition: transform 0.1s ease;
         }
 
-        /* Splash Screen Mini Grids */
+        /* Splash Screen Mini Grids & Arrows */
         .mini-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2px;
             background: #1e293b;
-            padding: 2px;
-            border-radius: 4px;
+            padding: 3px;
+            border-radius: 6px;
+            position: relative;
         }
         .mini-cell {
             background: #334155;
-            border-radius: 1px;
+            border-radius: 2px;
             aspect-ratio: 1 / 1;
         }
         .mini-cell.active { background: #38bdf8; }
         .mini-cell.gold { background: #fbbf24; }
+
+        /* Sleek White Arrows */
+        .arrow-x {
+            position: absolute;
+            height: 1px;
+            background: #ffffff;
+            left: -4px;
+            right: -4px;
+            z-index: 50;
+            pointer-events: none;
+        }
+        .arrow-x::after {
+            content: '';
+            position: absolute;
+            right: -1px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left: 5px solid #ffffff;
+            border-top: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+        }
+        .arrow-y {
+            position: absolute;
+            width: 1px;
+            background: #ffffff;
+            top: -4px;
+            bottom: -4px;
+            z-index: 50;
+            pointer-events: none;
+        }
+        .arrow-y::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top: 5px solid #ffffff;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+        }
     </style>
 </head>
 <body class="flex flex-col items-center min-h-screen p-4 overflow-x-hidden">
 
     <!-- Splash Screen -->
     <div id="splash-screen" class="fixed inset-0 bg-slate-950 z-[100] flex flex-col items-center justify-center p-6 text-center overflow-y-auto">
-        <!-- Game Icon: Row 2 and Column 2 colored -->
+        <!-- Game Icon -->
         <div class="mini-grid w-20 h-20 gap-1.5 p-1.5 mb-4 border-2 border-sky-900/30 aspect-square">
             <div class="mini-cell"></div><div class="mini-cell active"></div><div class="mini-cell"></div><div class="mini-cell"></div>
             <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
@@ -107,7 +148,7 @@
         <p class="text-slate-500 text-xs mb-8 uppercase tracking-[0.4em] font-bold leading-relaxed">place swipe score!</p>
 
         <div class="w-full max-w-sm space-y-3 mb-8">
-            <!-- Basic Scoring -->
+            <!-- Basic Word Scoring -->
             <div class="bg-slate-900/50 p-5 rounded-[2rem] border border-slate-800">
                 <h4 class="text-slate-400 text-[9px] font-800 uppercase tracking-[0.2em] mb-4">Word Scoring</h4>
                 <div class="grid grid-cols-4 gap-1 text-center">
@@ -120,62 +161,76 @@
                         <span class="text-[8px] text-slate-500 font-extrabold uppercase mt-1.5">4 Letters</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-sm font-800 text-white leading-none">3pts</span>
+                        <span class="text-sm font-800 text-white leading-none">5pts</span>
                         <span class="text-[8px] text-slate-500 font-extrabold uppercase mt-1.5">5 Letters</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-sm font-800 text-sky-400 leading-none">5pts</span>
+                        <span class="text-sm font-800 text-sky-400 leading-none">8pts</span>
                         <span class="text-[8px] text-slate-500 font-extrabold uppercase mt-1.5">6+ Letters</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Bonus Grid -->
+            <!-- Bonus Grids -->
             <div class="grid grid-cols-1 gap-3">
                 <div class="flex items-center gap-4 bg-slate-900/50 p-3 rounded-2xl border border-slate-800">
-                    <div class="mini-grid w-12 h-12">
+                    <div class="mini-grid w-14 h-14">
+                        <div class="arrow-x" style="top:15%"></div>
                         <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
                         <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
                         <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
                         <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
                     </div>
                     <div class="text-left">
-                        <h4 class="text-amber-400 text-xs font-800 uppercase">Line Bonus (+5)</h4>
-                        <p class="text-[10px] text-slate-500 font-semibold leading-tight mt-0.5">Straight horizontal or vertical 4-letter word.</p>
+                        <h4 class="text-amber-400 text-xs font-800 uppercase tracking-tight">Line Bonus (+5)</h4>
+                        <p class="text-[10px] text-slate-500 font-semibold leading-tight mt-0.5">Any straight 4-letter word.</p>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-4 bg-slate-900/50 p-3 rounded-2xl border border-slate-800">
-                    <div class="mini-grid w-12 h-12">
-                        <div class="mini-cell gold"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
-                        <div class="mini-cell gold"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
-                        <div class="mini-cell gold"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
-                        <div class="mini-cell gold"></div><div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
+                    <div class="mini-grid w-14 h-14">
+                        <div class="arrow-y" style="left:15%"></div>
+                        <div class="arrow-y" style="left:38.5%"></div>
+                        <div class="arrow-y" style="left:61.5%"></div>
+                        <div class="arrow-y" style="left:85%"></div>
+                        <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
+                        <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
+                        <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
+                        <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
                     </div>
                     <div class="text-left">
-                        <h4 class="text-amber-400 text-xs font-800 uppercase">Grid Bonus (+20)</h4>
-                        <p class="text-[10px] text-slate-500 font-semibold leading-tight mt-0.5">Complete all 4 Rows or all 4 Columns.</p>
+                        <h4 class="text-amber-400 text-xs font-800 uppercase tracking-tight">Grid Bonus (+20)</h4>
+                        <p class="text-[10px] text-slate-500 font-semibold leading-tight mt-0.5">Complete all 4 Rows or Columns.</p>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-4 bg-slate-900/50 p-3 rounded-2xl border border-slate-800">
-                    <div class="mini-grid w-12 h-12">
+                    <div class="mini-grid w-14 h-14">
+                        <div class="arrow-x" style="top:15%"></div>
+                        <div class="arrow-x" style="top:38.5%"></div>
+                        <div class="arrow-x" style="top:61.5%"></div>
+                        <div class="arrow-x" style="top:85%"></div>
+                        <div class="arrow-y" style="left:15%"></div>
+                        <div class="arrow-y" style="left:38.5%"></div>
+                        <div class="arrow-y" style="left:61.5%"></div>
+                        <div class="arrow-y" style="left:85%"></div>
                         <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
                         <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
                         <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
                         <div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div><div class="mini-cell active"></div>
                     </div>
                     <div class="text-left">
-                        <h4 class="text-sky-400 text-xs font-800 uppercase">Holy Grail (+100)</h4>
-                        <p class="text-[10px] text-slate-500 font-semibold leading-tight mt-0.5">Every row and column is a valid word.</p>
+                        <h4 class="text-sky-400 text-xs font-800 uppercase tracking-tight">Holy Grail (+100)</h4>
+                        <p class="text-[10px] text-slate-500 font-semibold leading-tight mt-0.5">Every row AND column is a word.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <button id="start-btn" class="w-full max-w-xs py-5 bg-sky-500 hover:bg-sky-400 rounded-[2rem] font-800 text-slate-950 text-xl uppercase tracking-tighter shadow-2xl shadow-sky-500/20 active:scale-95 transition-all">
+        <button id="start-btn" class="w-full max-w-xs py-5 bg-sky-500 hover:bg-sky-400 rounded-[2rem] font-800 text-slate-950 text-xl uppercase tracking-tighter shadow-2xl shadow-sky-500/20 active:scale-95 transition-all mb-4">
             Play Game
         </button>
+        <p id="daily-info" class="text-[9px] text-slate-600 uppercase font-bold tracking-widest mt-2"></p>
     </div>
 
     <!-- Header -->
@@ -221,14 +276,14 @@
             <!-- JS populated -->
         </div>
 
-        <div id="controls" class="flex flex-col gap-3">
+        <div id="controls" class="flex flex-col gap-3 mt-8">
             <button id="main-action-btn" class="w-full py-4 bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-800 disabled:text-slate-600 rounded-2xl font-800 text-lg transition-all shadow-lg active:scale-95 text-slate-950 uppercase tracking-tight">
                 READY...
             </button>
             <p id="sub-msg" class="text-center text-[11px] text-slate-500 px-8 leading-relaxed"></p>
         </div>
 
-        <!-- Words Found (4 Narrow Columns) -->
+        <!-- Found Words -->
         <div id="word-discovery" class="hidden flex flex-col gap-2">
             <div class="flex justify-between items-center px-1">
                 <h3 class="text-slate-500 text-[10px] font-extrabold uppercase tracking-widest">Found Words</h3>
@@ -245,7 +300,7 @@
         <div class="bg-slate-900 w-full max-w-sm rounded-[3rem] p-10 border border-slate-800 shadow-2xl flex flex-col items-center gap-6 text-center">
             <div>
                 <h2 class="text-5xl font-800 text-sky-400 tracking-tighter lowercase">girdle</h2>
-                <p class="text-[10px] text-slate-500 uppercase font-bold tracking-[0.4em]">Final Result</p>
+                <p id="result-game-num" class="text-[10px] text-slate-500 uppercase font-bold tracking-[0.4em]">Game #0</p>
             </div>
             
             <div class="flex flex-col items-center opacity-0 transition-opacity duration-500" id="final-score-container">
@@ -276,7 +331,9 @@
                 <button id="share-btn" class="w-full py-5 bg-sky-500 hover:bg-sky-400 rounded-[1.5rem] font-800 text-slate-950 flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95 text-lg uppercase">
                     Copy Results
                 </button>
-                <button onclick="location.reload()" class="text-slate-500 text-xs font-bold uppercase tracking-widest hover:text-white transition-colors">New Game</button>
+                <div id="countdown-timer" class="text-[10px] text-slate-600 font-extrabold uppercase tracking-widest py-2">
+                    Next girdle in 00:00:00
+                </div>
             </div>
         </div>
     </div>
@@ -297,10 +354,32 @@
         let bonusScore = 0;
         let foundWords = [];
         let swapStartIdx = null;
+        let lineBonusCells = new Set();
         
         let isSwiping = false;
         let currentSwipePath = [];
         let swipeWord = "";
+
+        // GLOBAL SEEDED RANDOM GENERATOR (Mulberry32)
+        let randomState;
+        function seedRandom(s) {
+            randomState = s;
+        }
+        function seededRandom() {
+            randomState |= 0; randomState = randomState + 0x6D2B79F5 | 0;
+            let t = Math.imul(randomState ^ randomState >>> 15, 1 | randomState);
+            t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+            return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        }
+
+        // FISHER-YATES SHUFFLE (Seeded)
+        function seededShuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(seededRandom() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         const DICTIONARY = new Set();
         async function loadDictionary() {
@@ -313,6 +392,20 @@
             } catch (e) {
                 ["THE","AND","YOU","ARE","FOR","GET","WAS","HAD","WIN","POP","GRID"].forEach(w => DICTIONARY.add(w));
             }
+        }
+
+        function getDailySeed() {
+            const now = new Date();
+            const year = now.getUTCFullYear();
+            const month = now.getUTCMonth();
+            const day = now.getUTCDate();
+            return year * 10000 + (month + 1) * 100 + day;
+        }
+
+        function getGameNumber() {
+            const epoch = new Date('2025-02-20').getTime(); // Start counting from a fixed point
+            const now = new Date().getTime();
+            return Math.floor((now - epoch) / (1000 * 60 * 60 * 24)) + 1;
         }
 
         function generateLetterSet() {
@@ -345,7 +438,8 @@
                 const filteredPool = activeIndices.map(i => pool[i]);
                 const filteredWeights = activeIndices.map(i => weights[i]);
                 const totalWeight = filteredWeights.reduce((a, b) => a + b, 0);
-                let random = Math.floor(Math.random() * totalWeight);
+                
+                let random = seededRandom() * totalWeight;
                 for (let i = 0; i < filteredPool.length; i++) {
                     if (random < filteredWeights[i]) return filteredPool[i];
                     random -= filteredWeights[i];
@@ -353,7 +447,7 @@
                 return filteredPool[0];
             }
 
-            const vowelTarget = Math.random() > 0.5 ? 5 : 6;
+            const vowelTarget = seededRandom() > 0.5 ? 5 : 6;
             for (let i = 0; i < vowelTarget; i++) {
                 const v = getRandomFromPool(vPool, vWeights, 'vowel');
                 letterCounts[v] = (letterCounts[v] || 0) + 1;
@@ -365,7 +459,9 @@
                 letterCounts[c] = (letterCounts[c] || 0) + 1;
                 result.push(c);
             }
-            result.sort(() => Math.random() - 0.5);
+
+            seededShuffle(result);
+
             const qIndex = result.indexOf('Q');
             if (qIndex !== -1) {
                 if (!result.includes('U')) {
@@ -373,7 +469,7 @@
                     if (replaceIdx !== -1) result[replaceIdx] = 'U';
                 }
                 const filtered = result.filter(l => l !== 'Q' && l !== 'U');
-                const insertAt = Math.floor(Math.random() * (filtered.length - 1));
+                const insertAt = Math.floor(seededRandom() * (filtered.length - 1));
                 filtered.splice(insertAt, 0, 'Q', 'U');
                 result = filtered;
             }
@@ -396,7 +492,7 @@
                 status.innerText = "Tap a cell to place the next letter.";
                 btn.disabled = placementIndex < 16;
                 btn.innerText = placementIndex < 16 ? "PLACING..." : "START REARRANGING";
-                subMsg.innerText = "Complete all Rows or all Columns for a +20 PT Bonus.";
+                subMsg.innerText = "Target a Perfect Grid: All Rows or All Columns = +20 PTS!";
             } else if (currentPhase === PHASES.REARRANGE) {
                 status.innerText = "Swap letters for 1 point each.";
                 btn.disabled = false;
@@ -408,7 +504,7 @@
                 btn.disabled = false;
                 btn.innerText = "FINISH GAME";
                 document.getElementById('word-discovery').classList.remove('hidden');
-                subMsg.innerText = "Points: 3L=1, 4L=2, 5L=3, 6L+=5. Diagonals allowed!";
+                subMsg.innerText = "Points: 3L=1, 4L=2, 5L=5, 6L+=8. Diagonals allowed!";
             }
         }
 
@@ -515,8 +611,9 @@
                 const len = swipeWord.length;
                 let pts = 1;
                 if (len === 4) pts = 2;
-                else if (len === 5) pts = 3;
-                else if (len >= 6) pts = 5;
+                else if (len === 5) pts = 5;
+                else if (len >= 6) pts = 8;
+                
                 if (len === 4) {
                     const p = [...currentSwipePath];
                     const r0 = Math.floor(p[0]/4), c0 = p[0]%4;
@@ -525,6 +622,7 @@
                     if (isHorizontal || isVertical) {
                         pts += 5;
                         p.forEach(idx => {
+                            lineBonusCells.add(idx);
                             const cell = document.getElementById(`cell-${idx}`);
                             cell.classList.remove('swiping-active', 'bg-sky-500', 'border-sky-300');
                             cell.classList.add('gold-flash');
@@ -596,6 +694,7 @@
             currentPhase = PHASES.RESULT;
             document.getElementById('result-modal').classList.remove('hidden');
             document.getElementById('result-modal').classList.add('flex');
+            
             let rowsWords = 0;
             let colsWords = 0;
             for (let i = 0; i < 4; i++) {
@@ -609,12 +708,15 @@
             else if (rowsWords === 4 || colsWords === 4) gridBonus = 20;
             bonusScore = gridBonus;
             const totalScore = Math.max(0, wordScore + bonusScore - switches);
+            
+            document.getElementById('result-game-num').innerText = `Game #${getGameNumber()}`;
             document.getElementById('stat-word-count').innerText = "0";
             document.getElementById('stat-word-pts').innerText = "0";
             document.getElementById('stat-deduction').innerText = "0";
             document.getElementById('stat-bonus').innerText = "0";
             document.getElementById('final-score').innerText = "0";
             document.getElementById('row-bonus-row').classList.toggle('hidden', gridBonus === 0);
+            
             await new Promise(r => setTimeout(r, 500));
             await animateValue('stat-word-count', 0, foundWords.length, 600);
             await new Promise(r => setTimeout(r, 200));
@@ -630,16 +732,35 @@
             await animateValue('final-score', 0, totalScore, 1000);
             await new Promise(r => setTimeout(r, 500));
             document.getElementById('result-actions').classList.remove('opacity-0');
+            startCountdown();
+        }
+
+        function startCountdown() {
+            const timerEl = document.getElementById('countdown-timer');
+            function updateTimer() {
+                const now = new Date();
+                const nextDay = new Date(now);
+                nextDay.setUTCDate(now.getUTCDate() + 1);
+                nextDay.setUTCHours(0, 0, 0, 0);
+                const diff = nextDay - now;
+                const h = Math.floor(diff / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                timerEl.innerText = `Next girdle in ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }
+            setInterval(updateTimer, 1000);
+            updateTimer();
         }
 
         function copyResults() {
             let gridVisual = "";
             for(let i=0; i<16; i++) {
-                gridVisual += `[${grid[i]}] `;
+                const emoji = lineBonusCells.has(i) ? "🟨" : "⬛";
+                gridVisual += emoji;
                 if((i+1) % 4 === 0) gridVisual += "\n";
             }
             const wordsList = foundWords.length > 0 ? foundWords.join(", ") : "None";
-            const shareText = `girdle 🫧\nScore: ${Math.max(0, wordScore + bonusScore - switches)}\nWords Found: ${foundWords.length}\nSwitches: ${switches}\nGrid Bonus: +${bonusScore}\n\n${gridVisual}\n\nWords: ${wordsList}\n\n🔥 beat my score!`;
+            const shareText = `girdle #${getGameNumber()} 🫧\nScore: ${Math.max(0, wordScore + bonusScore - switches)}\nWords Found: ${foundWords.length}\nSwitches: ${switches}\nGrid Bonus: +${bonusScore}\n\n${gridVisual}\n\n🔥 beat my score!`;
             const el = document.createElement('textarea');
             el.value = shareText;
             document.body.appendChild(el);
@@ -653,6 +774,13 @@
 
         window.onload = async () => {
             await loadDictionary();
+            
+            // Set up seeded random based on current day
+            const dailySeed = getDailySeed();
+            seedRandom(dailySeed);
+            
+            document.getElementById('daily-info').innerText = `Daily Challenge #${getGameNumber()}`;
+            
             lettersToPlace = generateLetterSet();
             document.getElementById('next-letter').innerText = lettersToPlace[0];
             createGrid();
