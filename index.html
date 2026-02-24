@@ -473,7 +473,8 @@
             }
             window.addEventListener('mouseup', () => handleCellInteraction(null, 'end'));
             container.addEventListener('touchmove', (e) => {
-                const element = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+                const touch = e.touches[0];
+                const element = document.elementFromPoint(touch.clientX, touch.clientY);
                 if (element?.classList.contains('grid-cell')) handleCellInteraction(parseInt(element.dataset.index), 'move');
             });
             window.addEventListener('touchend', () => handleCellInteraction(null, 'end'));
@@ -618,36 +619,30 @@
             setInterval(update, 1000); update();
         }
 
-        // MONOSPACE ALIGNMENT: Uses Unicode Sans-Serif Caps for universal metrics
         function toSansUnicode(char, isBold) {
             const charCode = char.charCodeAt(0);
             if (charCode >= 65 && charCode <= 90) {
                 const baseOffset = isBold ? 0x1D5D4 : 0x1D5A0;
-                return String.fromCodePoint(baseOffset + charCode - 65);
+                let result = String.fromCodePoint(baseOffset + charCode - 65);
+                if (char === 'I') result = result + "\u2004"; 
+                return result;
             }
             return char;
         }
 
         function copyResults() {
             if (isPracticeMode) return;
-            
-            // GRID ALIGNMENT: Uses Ideographic Space (U+3000) for rigid column sizing
             let visual = "";
             for(let i=0; i<16; i++) {
                 const letter = grid[i];
                 const tile = toSansUnicode(letter, lineBonusCells.has(i));
                 visual += tile;
-                
-                if((i+1) % 4 === 0) {
-                    visual += "\n";
-                } else {
-                    visual += "\u3000"; // Full-width Japanese space to lock the grid width
-                }
+                if((i+1) % 4 === 0) visual += "\n";
+                else visual += "\u3000"; 
             }
-            
             const gameRef = `#${getGameNumber()}`;
             const total = Math.max(0, wordScore + lineBonusScore + bonusScore - switches);
-            const text = `girdle ${gameRef} 🫧\nScore: ${total}\nWords: ${foundWords.length}\nLines: +${lineBonusScore}\nGrid: +${bonusScore}\nSwitches: -${switches}\n\n${visual}\n🔥 beat my score!`;
+            const text = `girdle ${gameRef} 🫧\nScore: ${total}\nWords: ${foundWords.length}\nLines: +${lineBonusScore}\nGrid: +${bonusScore}\nSwitches: -${switches}\n\n${visual}\n🔥 beat my score!\nPlay at: https://planomy.github.io/girdle`;
             const el = document.createElement('textarea'); el.value = text;
             document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
             document.getElementById('toast').style.opacity = '1';
