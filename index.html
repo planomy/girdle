@@ -128,7 +128,7 @@
         }
     </style>
 </head>
-<body class="flex flex-col items-center min-h-screen p-4 overflow-x-hidden">
+<body class="flex flex-col items-center min-h-screen p-4 pb-24 overflow-x-hidden">
 
     <!-- Splash Screen -->
     <div id="splash-screen" class="fixed inset-0 bg-slate-950 z-[100] flex flex-col items-center p-6 text-center overflow-y-auto">
@@ -149,19 +149,19 @@
                     <h4 class="text-slate-400 text-[10px] font-800 uppercase tracking-[0.2em] mb-4 text-center">Word Scoring</h4>
                     <div class="grid grid-cols-4 gap-1 text-center">
                         <div class="flex flex-col">
-                            <span class="text-sm font-800 text-white leading-none">1 Point</span>
+                            <span class="text-sm font-800 text-white">1 Point</span>
                             <span class="text-[11px] text-slate-400 font-extrabold uppercase mt-2">3 Letters</span>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-sm font-800 text-white leading-none">2 Points</span>
+                            <span class="text-sm font-800 text-white">2 Points</span>
                             <span class="text-[11px] text-slate-400 font-extrabold uppercase mt-2">4 Letters</span>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-sm font-800 text-white leading-none">3 Points</span>
+                            <span class="text-sm font-800 text-white">3 Points</span>
                             <span class="text-[11px] text-slate-400 font-extrabold uppercase mt-2">5 Letters</span>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-sm font-800 text-sky-400 leading-none">5 Points</span>
+                            <span class="text-sm font-800 text-sky-400">5 Points</span>
                             <span class="text-[11px] text-slate-400 font-extrabold uppercase mt-2">6+ Letters</span>
                         </div>
                     </div>
@@ -184,10 +184,7 @@
 
                     <div class="flex items-center gap-4 bg-slate-900/50 p-4 rounded-2xl border border-slate-800 text-left">
                         <div class="mini-grid w-14 h-14">
-                            <div class="arrow-y" style="left:15%"></div>
-                            <div class="arrow-y" style="left:38.5%"></div>
-                            <div class="arrow-y" style="left:61.5%"></div>
-                            <div class="arrow-y" style="left:85%"></div>
+                            <div class="arrow-y" style="left:15%"></div><div class="arrow-y" style="left:38.5%"></div><div class="arrow-y" style="left:61.5%"></div><div class="arrow-y" style="left:85%"></div>
                             <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
                             <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
                             <div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div><div class="mini-cell gold"></div>
@@ -215,9 +212,8 @@
                     </div>
                 </div>
 
-                <!-- Centered Buttons -->
                 <div class="w-full max-w-xs space-y-3 pt-6 mx-auto">
-                    <button id="start-daily-btn" class="w-full py-5 bg-sky-500 hover:bg-sky-400 rounded-[2rem] font-800 text-slate-950 text-xl uppercase tracking-tighter shadow-2xl shadow-sky-500/20 active:scale-95 transition-all">
+                    <button id="start-daily-btn" class="w-full py-5 bg-sky-500 hover:bg-sky-400 rounded-[2rem] font-800 text-slate-950 text-xl uppercase tracking-tighter shadow-2xl shadow-sky-500/20 active:scale-95 transition-all text-center">
                         Daily Challenge
                     </button>
                     <button id="start-practice-btn" class="w-full py-4 bg-transparent border-2 border-slate-800 hover:border-slate-600 rounded-[2rem] font-800 text-slate-400 text-sm uppercase tracking-widest active:scale-95 transition-all text-center">
@@ -249,25 +245,28 @@
         </div>
     </header>
 
-    <!-- Main Game -->
     <main id="game-container" class="w-full max-w-md flex flex-col gap-4 opacity-0 transition-opacity duration-500">
-        <div id="status-msg" class="bg-slate-800/40 p-3 rounded-2xl text-center text-xs font-semibold border border-slate-700/30 text-slate-300">Tap a cell to place the letter.</div>
+        <div id="status-msg" class="bg-slate-800/40 p-2 rounded-xl text-center text-[10px] font-800 uppercase tracking-[0.2em] border border-slate-700/30 text-sky-400">Placement Phase</div>
+        
         <div id="next-letter-container" class="flex items-center justify-center gap-6 py-2">
             <div class="text-right"><p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Up Next</p><p id="remaining-count" class="text-xs font-bold text-sky-500">16 left</p></div>
             <div id="next-letter" class="w-20 h-20 bg-sky-500 rounded-3xl flex items-center justify-center text-4xl font-800 shadow-xl shadow-sky-900/30 border-b-4 border-sky-700 text-slate-900 transition-all">-</div>
         </div>
+
         <div id="game-grid" class="grid grid-cols-4 gap-3 bg-slate-900 p-4 rounded-[2.5rem] shadow-2xl relative border border-slate-800/50"></div>
-        <div id="controls" class="flex flex-col gap-3 mt-8">
-            <button id="main-action-btn" class="w-full py-4 bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-800 disabled:text-slate-600 rounded-2xl font-800 text-lg transition-all shadow-lg active:scale-95 text-slate-950 uppercase tracking-tight">READY...</button>
-            <p id="sub-msg" class="text-center text-[11px] text-slate-500 px-8 leading-relaxed"></p>
+
+        <div id="controls" class="flex flex-col gap-3">
+            <button id="main-action-btn" class="w-full py-5 bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-800 disabled:text-slate-600 rounded-2xl font-800 text-sm transition-all shadow-lg active:scale-95 text-slate-950 uppercase tracking-tight leading-tight px-4">READY...</button>
+            <p id="sub-msg" class="text-center text-xs text-slate-500 px-8 leading-relaxed font-semibold italic"></p>
         </div>
-        <div id="word-discovery" class="hidden flex flex-col gap-2">
+
+        <div id="word-discovery" class="hidden flex flex-col gap-2 mt-4">
             <div class="flex justify-between items-center px-1"><h3 class="text-slate-500 text-[10px] font-extrabold uppercase tracking-widest">Found Words</h3><span id="word-count-badge" class="text-sky-500 text-[10px] font-bold bg-sky-500/10 px-2 py-0.5 rounded-full">0</span></div>
-            <div id="word-columns" class="grid grid-cols-4 gap-1.5 max-h-44 overflow-y-auto pr-1 custom-scrollbar"></div>
+            <div id="word-columns" class="grid grid-cols-4 gap-1.5 overflow-y-visible"></div>
         </div>
     </main>
 
-    <!-- Result Modal -->
+    <!-- Results Modal -->
     <div id="result-modal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-xl hidden items-center justify-center p-6 z-50">
         <div class="bg-slate-900 w-full max-w-sm rounded-[3rem] p-10 border border-slate-800 shadow-2xl flex flex-col items-center gap-6 text-center overflow-y-auto">
             <div class="w-full flex flex-col items-center">
@@ -280,12 +279,12 @@
                 <span class="text-slate-400 uppercase tracking-widest text-[11px] font-extrabold mt-2">Total Score</span>
             </div>
 
-            <div class="w-full space-y-3 border-y border-slate-800 py-6">
-                <div class="flex justify-between text-xs font-bold"><span class="text-slate-500 uppercase">Words Found</span><span id="stat-word-count" class="text-white">0</span></div>
-                <div class="flex justify-between text-xs font-bold"><span class="text-slate-500 uppercase">Word Pts</span><span id="stat-word-pts" class="text-white">0</span></div>
-                <div class="flex justify-between text-xs font-bold"><span class="text-amber-400 uppercase">Line Bonuses</span><span id="stat-line-bonus" class="text-amber-400">0</span></div>
-                <div class="flex justify-between text-xs font-bold"><span class="text-slate-500 uppercase">Switches</span><span id="stat-deduction" class="text-rose-400">0</span></div>
-                <div class="flex justify-between text-xs font-bold hidden" id="row-bonus-row"><span class="text-sky-400 uppercase">Grid Bonus</span><span id="stat-bonus" class="text-sky-400">0</span></div>
+            <div class="w-full space-y-3 border-y border-slate-800 py-6 text-[11px] font-bold">
+                <div class="flex justify-between uppercase"><span class="text-slate-500">Words Found</span><span id="stat-word-count" class="text-white">0</span></div>
+                <div class="flex justify-between uppercase"><span class="text-slate-500">Word Points</span><span id="stat-word-pts" class="text-white">0</span></div>
+                <div class="flex justify-between uppercase"><span class="text-amber-400">Line Bonuses</span><span id="stat-line-bonus" class="text-amber-400">0</span></div>
+                <div class="flex justify-between uppercase"><span class="text-slate-500">Switches</span><span id="stat-deduction" class="text-rose-400">0</span></div>
+                <div class="flex justify-between uppercase hidden" id="row-bonus-row"><span class="text-sky-400">Grid Bonus</span><span id="stat-bonus" class="text-sky-400">0</span></div>
             </div>
 
             <div class="w-full space-y-3 opacity-0 transition-opacity duration-500" id="result-actions">
@@ -296,7 +295,7 @@
         </div>
     </div>
 
-    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-white text-slate-950 px-8 py-3 rounded-full font-800 shadow-2xl opacity-0 transition-all pointer-events-none z-50 text-sm">Results copied!</div>
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-white text-slate-950 px-8 py-3 rounded-full font-800 shadow-2xl opacity-0 transition-all pointer-events-none z-50 text-sm text-center">Results copied!</div>
 
     <script>
         const PHASES = { START: -1, PLACE: 0, REARRANGE: 1, SWIPE: 2, RESULT: 3 };
@@ -434,27 +433,38 @@
         }
 
         function updateUI() {
+            const status = document.getElementById('status-msg');
             const btn = document.getElementById('main-action-btn');
             const sub = document.getElementById('sub-msg');
-            document.getElementById('score-display').innerText = Math.max(0, wordScore + lineBonusScore + bonusScore - switches);
-            document.getElementById('deduction-display').innerText = `Cost: ${switches}`;
-            document.getElementById('remaining-count').innerText = `${16 - placementIndex} left`;
+            const scoreDisp = document.getElementById('score-display');
+            const deductionDisp = document.getElementById('deduction-display');
+            const remCount = document.getElementById('remaining-count');
+
+            scoreDisp.innerText = Math.max(0, wordScore + lineBonusScore + bonusScore - switches);
+            deductionDisp.innerText = `Cost: ${switches}`;
+            remCount.innerText = `${16 - placementIndex} left`;
 
             if (currentPhase === PHASES.PLACE) {
-                document.getElementById('status-msg').innerText = "Tap a cell to place the letter.";
+                status.innerText = "Phase 1: Placement";
                 btn.disabled = placementIndex < 16;
-                btn.innerText = placementIndex < 16 ? "PLACING LETTERS..." : "CLICK TO START REARRANGING LETTERS";
-                sub.innerText = "Goal: Forced Rows or Columns = +20 PT Bonus.";
+                btn.innerText = placementIndex < 16 ? "PLACING LETTERS..." : "CLICK TO START MOVING LETTERS";
+                sub.innerText = "Tap cells to place letters. Strategy: Cluster common letters together!";
             } else if (currentPhase === PHASES.REARRANGE) {
-                document.getElementById('status-msg').innerText = "Swap letters for 1 point each.";
-                btn.disabled = false; btn.innerText = "CLICK TO LOCK GRID AND SWIPE WORDS";
-                document.getElementById('next-letter-container').classList.add('hidden');
-                sub.innerText = "Every swap costs 1 point. Aim for line bonuses!";
+                status.innerText = "Phase 2: Rearrange";
+                btn.disabled = false;
+                btn.innerText = "DONE MOVING? LOCK GRID AND SWIPE WORDS";
+                sub.innerText = "Tap two cells to swap letters. Each swap costs 1 point.";
             } else if (currentPhase === PHASES.SWIPE) {
-                document.getElementById('status-msg').innerText = "Find words! Swipe to connect.";
-                btn.disabled = false; btn.innerText = "CLICK TO SEE RESULTS AND BRAG";
+                status.innerText = "Phase 3: Swipe";
                 document.getElementById('word-discovery').classList.remove('hidden');
-                sub.innerText = "Points: 3L=1, 4L=2, 5L=3, 6L+=5. Diagonals allowed!";
+                if (foundWords.length === 0) {
+                    btn.disabled = true;
+                    btn.innerText = "SWIPE A WORD TO UNLOCK RESULTS";
+                } else {
+                    btn.disabled = false;
+                    btn.innerText = "DONE SWIPING? SEE RESULTS AND BRAG";
+                }
+                sub.innerText = "Drag your finger to connect letters. 3L=1pt, 4L=2pts, 5L=3pts, 6L+=5pts.";
             }
         }
 
@@ -638,7 +648,7 @@
                 const tile = toSansUnicode(letter, lineBonusCells.has(i));
                 visual += tile;
                 if((i+1) % 4 === 0) visual += "\n";
-                else visual += "\u3000"; 
+                else visual += "\u3000\u3000"; 
             }
             const gameRef = `#${getGameNumber()}`;
             const total = Math.max(0, wordScore + lineBonusScore + bonusScore - switches);
