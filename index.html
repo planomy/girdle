@@ -183,7 +183,7 @@
 
     const FUNNY_FINISHERS = [
       "GOOD TO GO", "LET'S COOK THIS SUCKER", "SCORE ME!", "THAT'S ENOUGH",
-      "BRING ON THE RESULTS", "COOKED TO PERFECTION", "I'M DONE DEEP FRYYING"
+      "BRING ON THE RESULTS", "COOKED TO PERFECTION", "I'M DONE DEEP FRYING"
     ];
 
     const PHASES = { PLACE: 0, REARRANGE: 1, SWIPE: 2, RESULT: 3 };
@@ -210,6 +210,53 @@
     let swipeWord = "";
     let hoveredCellIdx = null;
     let hudMessageVisible = true;
+
+    // --- Swipe Timer (10 seconds burst mode) ---
+    const SWIPE_DURATION = 20; // seconds
+    let swipeTimeLeft = SWIPE_DURATION;
+    let swipeTimerInterval = null;
+
+    const startSwipeTimer = () => {
+      swipeTimeLeft = SWIPE_DURATION;
+      updateTimerDisplay();
+      clearInterval(swipeTimerInterval);
+      swipeTimerInterval = setInterval(() => {
+        swipeTimeLeft--;
+        updateTimerDisplay();
+        if (swipeTimeLeft <= 0) {
+          clearInterval(swipeTimerInterval);
+          showResults();
+        }
+      }, 1000);
+    };
+
+    const stopSwipeTimer = () => {
+      clearInterval(swipeTimerInterval);
+    };
+
+    const updateTimerDisplay = () => {
+      const el = document.getElementById('top-msg');
+      if (currentPhase === PHASES.SWIPE) {
+        el.innerText = `SWIPE! ${swipeTimeLeft}s`;
+      }
+    };
+
+    document.addEventListener('visibilitychange', () => {
+      if (currentPhase !== PHASES.SWIPE) return;
+      if (document.hidden) {
+        clearInterval(swipeTimerInterval);
+      } else if (swipeTimeLeft > 0) {
+        clearInterval(swipeTimerInterval);
+        swipeTimerInterval = setInterval(() => {
+          swipeTimeLeft--;
+          updateTimerDisplay();
+          if (swipeTimeLeft <= 0) {
+            clearInterval(swipeTimerInterval);
+            showResults();
+          }
+        }, 1000);
+      }
+    });
 
     // seeded random
     let randomState;
@@ -381,7 +428,7 @@
         doneBtn.classList.remove('opacity-30', 'cursor-not-allowed');
         doneBtn.disabled = false;
       } else if (currentPhase === PHASES.SWIPE) {
-        topMsg.innerText = 'BEGIN SWIPING WORDS';
+        updateTimerDisplay();
         stepNum.innerText = '3.';
         s3.classList.replace('bg-sky-500/20', 'bg-sky-500');
         document.getElementById('word-discovery').classList.remove('hidden');
@@ -675,6 +722,7 @@
     }
 
     const showResults = async () => {
+      stopSwipeTimer();
       currentPhase = PHASES.RESULT;
       document.getElementById('result-modal').classList.replace('hidden', 'flex');
 
@@ -796,7 +844,9 @@ document.addEventListener('DOMContentLoaded', () => {
       currentPhase = PHASES.SWIPE;
       hudMessageVisible = true;
       updateUI();
+      startSwipeTimer();
     } else if (currentPhase === PHASES.SWIPE) {
+      stopSwipeTimer();
       showResults();
     }
     renderGrid();
