@@ -28,6 +28,40 @@
     .no-scrollbar::-webkit-scrollbar{display:none;} .no-scrollbar{-ms-overflow-style:none; scrollbar-width:none; }
     #game-container { padding-bottom: env(safe-area-inset-bottom); display:flex; flex-direction:column; justify-content:flex-start; min-height:0; }
     #game-grid { max-height: 42dvh; aspect-ratio:1/1; width:auto; margin:0 auto; }
+
+    /* Surgical swipe timer badge */
+    .timer-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      color: #020617;
+      background: rgba(56,189,248,0.95);
+      border: 1px solid rgba(125,211,252,0.85);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.55);
+      user-select: none;
+      pointer-events: none;
+      z-index: 80;
+      font-variant-numeric: tabular-nums;
+    }
+    .timer-badge.hidden { display: none; }
+    .timer-badge.critical {
+      background: rgba(244,63,94,0.95); /* rose-500-ish */
+      border-color: rgba(251,113,133,0.9);
+      animation: timerPulse 0.8s ease-in-out infinite;
+    }
+    @keyframes timerPulse {
+      0% { transform: scale(1); opacity: 0.95; }
+      50% { transform: scale(1.06); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.95; }
+    }
   </style>
 </head>
 <body class="flex flex-col items-center">
@@ -123,6 +157,7 @@
     </div>
 
     <div id="game-grid-container" class="relative group shrink-1 min-h-0 mb-1 overflow-visible">
+      <div id="swipe-timer-badge" class="timer-badge hidden">20</div>
       <div id="game-grid" class="grid grid-cols-4 gap-1 bg-slate-900/50 p-1 rounded-[1.25rem] border border-slate-800/50 backdrop-blur-sm"></div>
       <div id="word-feedback" class="absolute -top-24 left-1/2 -translate-x-1/2 z-[60] bg-slate-950 px-6 py-2 rounded-2xl border border-slate-800 text-xl tracking-tighter text-center pointer-events-none opacity-0 transition-all duration-300 shadow-2xl whitespace-nowrap" style="font-weight:800">COOL!</div>
     </div>
@@ -211,48 +246,92 @@
     let hoveredCellIdx = null;
     let hudMessageVisible = true;
 
-    // --- Swipe Timer (10 seconds burst mode) ---
-    const SWIPE_DURATION = 20; // seconds
+    // --- Swipe Timer (Daily only) ---
+    const SWIPE_DURATION = 30; // seconds (adjust here)
     let swipeTimeLeft = SWIPE_DURATION;
     let swipeTimerInterval = null;
+    let swipeFrozen = false;
+    let resultsShown = false;
+    let timeRemainingAtFinish = null; // daily only
 
     const startSwipeTimer = () => {
+      // Daily only
+      swipeFrozen = false;
+      resultsShown = false;
+      timeRemainingAtFinish = null;
+
       swipeTimeLeft = SWIPE_DURATION;
+      showTimerBadge(true);
       updateTimerDisplay();
+
       clearInterval(swipeTimerInterval);
       swipeTimerInterval = setInterval(() => {
+        if (swipeFrozen) return;
         swipeTimeLeft--;
         updateTimerDisplay();
+
         if (swipeTimeLeft <= 0) {
+          swipeTimeLeft = 0;
+          updateTimerDisplay();
           clearInterval(swipeTimerInterval);
-          showResults();
+
+          // Freeze immediately, then show results after a surgical pause
+          swipeFrozen = true;
+          timeRemainingAtFinish = 0;
+          setTimeout(() => {
+            if (!resultsShown) showResults();
+          }, 1500);
         }
       }, 1000);
     };
 
     const stopSwipeTimer = () => {
       clearInterval(swipeTimerInterval);
+      swipeFrozen = false;
+      showTimerBadge(false);
+    };
+
+    const showTimerBadge = (show) => {
+      const badge = document.getElementById('swipe-timer-badge');
+      if (!badge) return;
+      badge.classList.toggle('hidden', !show);
     };
 
     const updateTimerDisplay = () => {
-      const el = document.getElementById('top-msg');
-      if (currentPhase === PHASES.SWIPE) {
-        el.innerText = `SWIPE! ${swipeTimeLeft}s`;
+      const badge = document.getElementById('swipe-timer-badge');
+      if (!badge) return;
+
+      // Hide in practice or outside swipe
+      if (currentPhase !== PHASES.SWIPE || isPracticeMode) {
+        showTimerBadge(false);
+        return;
       }
+
+      showTimerBadge(true);
+      badge.textContent = String(swipeTimeLeft);
+      badge.classList.toggle('critical', swipeTimeLeft <= 5 && swipeTimeLeft > 0);
     };
 
     document.addEventListener('visibilitychange', () => {
-      if (currentPhase !== PHASES.SWIPE) return;
+      if (currentPhase !== PHASES.SWIPE || isPracticeMode) return;
+
       if (document.hidden) {
         clearInterval(swipeTimerInterval);
-      } else if (swipeTimeLeft > 0) {
+      } else if (swipeTimeLeft > 0 && !swipeFrozen) {
         clearInterval(swipeTimerInterval);
         swipeTimerInterval = setInterval(() => {
+          if (swipeFrozen) return;
           swipeTimeLeft--;
           updateTimerDisplay();
           if (swipeTimeLeft <= 0) {
+            swipeTimeLeft = 0;
+            updateTimerDisplay();
             clearInterval(swipeTimerInterval);
-            showResults();
+            swipeFrozen = true;
+            timeRemainingAtFinish = 0;
+            setTimeout(() => {
+              if (!resultsShown) showResults();
+            }, 300);
           }
         }, 1000);
       }
@@ -428,8 +507,10 @@
         doneBtn.classList.remove('opacity-30', 'cursor-not-allowed');
         doneBtn.disabled = false;
       } else if (currentPhase === PHASES.SWIPE) {
-        updateTimerDisplay();
+        // Surgical: instruction stays stable, timer lives in badge
+        topMsg.innerText = 'EXECUTE';
         stepNum.innerText = '3.';
+        updateTimerDisplay();
         s3.classList.replace('bg-sky-500/20', 'bg-sky-500');
         document.getElementById('word-discovery').classList.remove('hidden');
         queueBox.classList.add('hidden');
@@ -574,6 +655,7 @@
       }
 
       if (currentPhase === PHASES.SWIPE) {
+        if (swipeFrozen) return;
         if (type === 'start' && idx !== null) {
           // GUARD: no swiping from empty cells
           if (!grid[idx]) return;
@@ -722,6 +804,13 @@
     }
 
     const showResults = async () => {
+      if (resultsShown) return;
+      resultsShown = true;
+      // Capture remaining time (Daily only)
+      if (!isPracticeMode && timeRemainingAtFinish === null) {
+        timeRemainingAtFinish = Math.max(0, swipeTimeLeft);
+      }
+
       stopSwipeTimer();
       currentPhase = PHASES.RESULT;
       document.getElementById('result-modal').classList.replace('hidden', 'flex');
@@ -740,6 +829,17 @@
 
       document.getElementById('grid-bonus-row').classList.toggle('hidden', gridBonusScore === 0);
       document.getElementById('result-game-num-display').innerText = isPracticeMode ? 'Practice Mode' : `Challenge #${getGameNumber()}`;
+
+      // Time remaining (Daily only, only if finished early)
+      const existing = document.getElementById('result-time-remaining');
+      if (existing) existing.remove();
+      if (!isPracticeMode && typeof timeRemainingAtFinish === 'number' && timeRemainingAtFinish > 0) {
+        const line = document.createElement('p');
+        line.id = 'result-time-remaining';
+        line.className = 'text-[9px] text-slate-500 uppercase font-bold tracking-[0.3em] -mt-3 mb-4';
+        line.textContent = `Finished with ${timeRemainingAtFinish}s remaining`;
+        document.getElementById('result-game-num-display').insertAdjacentElement('afterend', line);
+      }
 
       const sharePrev = document.getElementById('share-preview');
       sharePrev.innerHTML = '';
@@ -762,6 +862,11 @@
     };
 
     const copyToClipboard = async () => {
+      // Only brag time on Daily, and only if finished early
+      const timeLine = (!isPracticeMode && typeof timeRemainingAtFinish === 'number' && timeRemainingAtFinish > 0)
+        ? `Finished with ${timeRemainingAtFinish}s remaining
+`
+        : '';
       const total = Math.max(0, wordScore + placeBonusScore + lineBonusScore + gridBonusScore - penaltyPoints);
 
       let gridVisual = '';
@@ -773,7 +878,11 @@
         else gridVisual += ' ';
       }
 
-      const text = `gridee #${getGameNumber()}\nScore: ${total} | Swaps: -${penaltyPoints}\n\n${gridVisual}\nPlay at: https://planomy.github.io/gridee`;
+      const text = `gridee #${getGameNumber()}
+Score: ${total} | Swaps: -${penaltyPoints}
+${timeLine}
+${gridVisual}
+Play at: https://planomy.github.io/gridee`;
 
       // Modern clipboard when available
       try {
@@ -811,6 +920,14 @@
       placementDetectedWords.clear();
       placementBonusLines.clear();
 
+      // reset swipe state
+      swipeFrozen = false;
+      resultsShown = false;
+      timeRemainingAtFinish = null;
+      swipeTimeLeft = SWIPE_DURATION;
+      clearInterval(swipeTimerInterval);
+      updateTimerDisplay();
+
       document.getElementById('splash-screen').style.display = 'none';
       document.getElementById('result-modal').classList.replace('flex', 'hidden');
       document.getElementById('game-container').classList.remove('opacity-0');
@@ -844,7 +961,12 @@ document.addEventListener('DOMContentLoaded', () => {
       currentPhase = PHASES.SWIPE;
       hudMessageVisible = true;
       updateUI();
-      startSwipeTimer();
+      // Daily gets the timer. Practice is untimed.
+      if (!isPracticeMode) startSwipeTimer();
+      else {
+        swipeTimeLeft = SWIPE_DURATION;
+        updateTimerDisplay();
+      }
     } else if (currentPhase === PHASES.SWIPE) {
       stopSwipeTimer();
       showResults();
